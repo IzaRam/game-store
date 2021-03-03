@@ -1,6 +1,8 @@
-package com.izram.gamestoreapp;
+package com.izram.gamestoreapp.model;
 
-public class Game {
+import java.io.Serializable;
+
+public class Game implements Serializable {
 
     private String id;
     private String name;

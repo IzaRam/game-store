@@ -12,8 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GameStoreApp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AddGameActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.ViewGameActivity"></activity>
+        <activity android:name=".activity.AddGameActivity" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:theme="@style/Theme.GameStoreApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

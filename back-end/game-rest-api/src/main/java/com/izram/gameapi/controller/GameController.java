@@ -4,9 +4,12 @@ import com.izram.gameapi.model.Game;
 import com.izram.gameapi.repository.GameRepository;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Controller
@@ -29,9 +32,26 @@ public class GameController {
     }
 
     @PostMapping(path = "/add")
-    public @ResponseBody JSONObject addNewGame(@RequestBody Game game) {
+    public @ResponseBody ResponseEntity<Object> addNewGame(@RequestBody Game game) {
         gameRepository.save(game);
-        return new JSONObject().put("Response", "Saved");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Response", "Saved");
+        return new ResponseEntity<>(jsonObject.toMap(), HttpStatus.OK);
+    }
+
+    @PutMapping(path = "edit/{id}")
+    public @ResponseBody ResponseEntity<Object> editGamebyId(@PathVariable(value = "id") int id, @RequestBody Game updatedGame) throws NoSuchElementException {
+        Game game = gameRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User not found on :: "+ id));
+
+        game.setName(updatedGame.getName());
+        game.setYear(updatedGame.getYear());
+        game.setDescription(updatedGame.getDescription());
+        game.setImage_url(updatedGame.getImage_url());
+        gameRepository.save(game);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Response", "Updated");
+        return new ResponseEntity<>(jsonObject.toMap(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
