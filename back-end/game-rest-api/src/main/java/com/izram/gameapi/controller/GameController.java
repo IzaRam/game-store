@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/api")
-@CrossOrigin(origins = "*", methods = {RequestMethod.GET}, allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class GameController {
 
     @Autowired

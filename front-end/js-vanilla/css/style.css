@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: rgb(241, 235, 235);
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: rgb(71, 67, 67);
+    color: white;
+    height: 60px;
+}
+
+header .add {
+    align-self: center;
+    padding-right: 30px;
+}
+
+header .add a {
+    color: white;
+    text-decoration: none;
+}
+
+header .add a:hover {
+    padding: 5px;
+    background-color: white;
+    color: black;
+}
+
+.title h1 {
+    padding-left: 50px;
+    padding-top: 10px;
+}
+
+.title a {
+    text-decoration: none;
+    color: white;
+}
+
+.game {
+    width: 80%;
+    margin: auto;
+}
+
+.game img {
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    border-radius: 25%;
+}
+
+.container {
+    position: relative;
+    display: inline-block;
+    height: 200px;
+    width: 136px;
+}
+
+.container:hover img {
+    opacity: 0.3;
+    cursor: pointer;
+}
+
+.container:hover p {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.game p {
+    opacity: 0;
+    font-weight: bold;
+}
+
+.info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+}
