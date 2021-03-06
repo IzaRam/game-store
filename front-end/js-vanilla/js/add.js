@@ -14,7 +14,9 @@ console.log(localStorage.getItem("id"));
                 name: document.getElementById("name").value,
                 year: document.getElementById("year").value,
                 description: document.getElementById("description").value,
-                image_url: document.getElementById("image").value
+                image_url: document.getElementById("image").value,
+                quantity: document.getElementById("quantity").value,
+                price: document.getElementById("price").value
             });
 
             Post(urlP, body);

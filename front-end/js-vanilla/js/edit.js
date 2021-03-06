@@ -8,6 +8,8 @@ document.getElementById("name").value = json_obj.name;
 document.getElementById("year").value = json_obj.year;
 document.getElementById("description").value = json_obj.description;
 document.getElementById("image").value = json_obj.image_url;
+document.getElementById("quantity").value = json_obj.quantity;
+document.getElementById("price").value = json_obj.price;
 
 function Get(url){
     var httpreq = new XMLHttpRequest(); 
@@ -20,16 +22,6 @@ function Get(url){
 
 urlP = "http://localhost:8080/api/edit/"+id;
 
-body = JSON.stringify({
-    id: id,
-    name: document.getElementById("name").value,
-    year: document.getElementById("year").value,
-    description: document.getElementById("description").value,
-    image_url: document.getElementById("image").value
-});
-
-// console.log(id);
-
 document.getElementById("myForm").addEventListener("submit", function(e){
 
     body = JSON.stringify({
@@ -37,8 +29,10 @@ document.getElementById("myForm").addEventListener("submit", function(e){
         name: document.getElementById("name").value,
         year: document.getElementById("year").value,
         description: document.getElementById("description").value,
-        image_url: document.getElementById("image").value
-        });
+        image_url: document.getElementById("image").value,
+        quantity: document.getElementById("quantity").value,
+        price: document.getElementById("price").value
+    });
 
         console.log(body);
 

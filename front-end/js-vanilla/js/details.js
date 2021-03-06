@@ -1,16 +1,14 @@
-window.onload = function() {
-    info();
-}
+// window.onload = function() {
+//     info();
+// }
 
 function info() {
 
     var id = localStorage.getItem("id");
     var json_obj = JSON.parse(Get("http://localhost:8080/api/games/"+id));
 
-    console.log(id);
 
-
-    var gameCard = document.getElementById("container");
+    var gameCard = document.getElementById("game-info");
     var content = "";
     content += ` <h1>${json_obj.name}</h1>`;
     content += ` <p>${json_obj.year}</p>`;
@@ -21,13 +19,13 @@ function info() {
 
     var edit = document.getElementById("btn_edit");
     edit.addEventListener('click', () => {
-        window.location = "edit.html";
+        window.location = "./html/edit.html";
     })
 
-    var edit = document.getElementById("btn_del");
-    edit.addEventListener('click', () => {
+    var del = document.getElementById("btn_del");
+    del.addEventListener('click', () => {
         Delete("http://localhost:8080/api/"+id);
-        window.location = "../index.html";
+        window.location = "./index.html";
     })
 
 }

@@ -41,16 +41,9 @@ public class GameController {
 
     @PutMapping(path = "edit/{id}")
     public @ResponseBody ResponseEntity<Object> editGamebyId(@PathVariable(value = "id") int id, @RequestBody Game updatedGame) throws NoSuchElementException {
-        Game game = gameRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User not found on :: "+ id));
-
-        game.setName(updatedGame.getName());
-        game.setYear(updatedGame.getYear());
-        game.setDescription(updatedGame.getDescription());
-        game.setImage_url(updatedGame.getImage_url());
-        gameRepository.save(game);
-
+        gameRepository.save(updatedGame);
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("Response", "Updated");
+        jsonObject.put("Response", "Updated " + id);
         return new ResponseEntity<>(jsonObject.toMap(), HttpStatus.OK);
     }
 

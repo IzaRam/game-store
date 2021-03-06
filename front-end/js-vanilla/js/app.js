@@ -41,10 +41,19 @@ function listAll() {
         id = obj[target.textContent];
         if (id != undefined) {
             localStorage.setItem("id", id);
-            window.location = './html/details.html';
+
+            document.getElementById("popup-1").classList.toggle("active");
+
+            info();
+
+            // window.location = './html/details.html';
         }
         
     })
+
+    
+
+    
 
 }
 
@@ -53,4 +62,16 @@ function Get(url){
     httpreq.open("GET",url,false);
     httpreq.send(null);
     return httpreq.responseText;          
+}
+
+
+function togglePopup() {
+    document.getElementById("popup-1").classList.toggle("active");
+
+    document.addEventListener('keydown', function(event){
+        if(event.key === "Escape"){
+            document.getElementById("popup-1").classList.toggle("active");
+        }
+    });
+    
 }

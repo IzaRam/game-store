@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "games")
 public class Game {
 
     @Id
@@ -27,5 +28,11 @@ public class Game {
 
     @Column(nullable = false)
     String image_url;
+
+    @Column(nullable = false)
+    int quantity;
+
+    @Column(nullable = false)
+    double price;
 
 }
