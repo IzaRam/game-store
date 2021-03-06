@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100%;
+    margin-top: 40pt;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-content {
+    height: 28rem;
+    background-color: rgb(245, 245, 245);
+    padding: 20px 100px 100px 100px;
+    border-radius: 10%;
+}
+
+.edit-content h3 {
+    text-align: center;
+    margin-bottom: 10pt;
+}
+
+.edit-content textarea {
+    margin-top: 4pt;
+    margin-bottom: 15pt;
+}
+
+.edit-content input[type=number] {
+    margin-top: 4pt;
+    margin-bottom: 15pt;
+}
+
+.edit-content input[type=submit] {
+    padding-left: 10pt;
+    padding-right: 10pt;
+    padding-top: 5pt;
+    padding-bottom: 5pt;
+    position: absolute;
+    left: 45%;
+}
