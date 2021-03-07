@@ -6,29 +6,128 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Store</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- user:
-            user_id
-            username
-            email
-            password
-         cart:
-            user_id 
-            game_id
-         vendas:
-            user_id
-            game_id
-    -->
-
     <header>
         <h1>Game Store</h1>
         <div class="menu">
-            <a href="#">LOGIN</a>
+            <a id="login" href="login.html">LOGIN</a>
+            <a id="cart" href="cart.html">CART</a>
         </div>
     </header>
+
+    <button id="logout" class="logged-in">Logout</button>
+
+    <button id="btn">click</button>
+
+    <div id="content"></div>
+
+
+    <script type="text/javascript">
+
+        isLogged = localStorage.getItem("isLogged");
+        username = localStorage.getItem("username");
+
+        var login = document.getElementById("login");
+        var logout = document.getElementById("logout");
+
+        window.onload = () => {
+            if (isLogged == "true") {
+                logout.classList.toggle("logged-in");
+            } else {
+                logout.classList.toggle("logged-out");
+            }
+        }
+
+        if(isLogged == "true") {
+            login.textContent = username;
+            login.href = "#";
+            logout.classList.toggle("logged-in");
+        }
+        
+
+        logout.addEventListener("click", () => {
+            localStorage.setItem("isLogged", false);
+            localStorage.setItem("username", null);
+            username = null;
+            isLogged = false;
+            login.textContent = "LOGIN";
+            login.href = "login.html";
+            logout.classList.toggle("logged-out");
+        });
+
+
+
+
+
+        // ...
+
+        document.getElementById("btn").addEventListener("click", function(e){
+
+            var url = "http://localhost:8080/api/games";
+
+            var response = JSON.parse(Get(url));
+
+            var content = "";
+
+            for (let obj of response) {
+
+                content += `<img src="${obj.image_url}" alt="${obj.id}" />`;
+
+            }
+
+            document.getElementById("content").innerHTML = content;
+
+            document.getElementById("content").addEventListener('click', (e) => {
+                e = e || window.event;
+                var target = e.target || e.srcElement; 
+
+                var game_id = target.alt;
+
+                var game = JSON.parse(Get("http://localhost:8080/api/games/"+game_id));
+
+                if(isLogged == "true") {
+
+                    var user = JSON.parse(Get("http://localhost:8080/users/name/"+username));
+
+                    user.gameListCart.push(game);
+
+                    url = "http://localhost:8080/users/edit/"+user.user_id;
+                    body = JSON.stringify(user);
+                    var response = Put(url, body);
+                    console.log(response);
+                } else {
+                    window.location = "login.html";
+                }
+
+            });
+
+
+
+
+
+        });
+
+        function Get(url){
+            var httpreq = new XMLHttpRequest(); 
+            httpreq.open("GET",url,false);
+            httpreq.send(null);
+            return httpreq.responseText;          
+        }
+
+        function Put(url, body){
+            var httpreq = new XMLHttpRequest(); 
+            httpreq.open("PUT",url,false);
+            httpreq.setRequestHeader("Content-Type", "application/json;charset=utf-8")
+            httpreq.send(body);
+            return httpreq.responseText;          
+        }
+
+    </script>
     
 </body>
 

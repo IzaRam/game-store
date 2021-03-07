@@ -1,0 +1,7 @@
+.logged-in {
+    visibility: visible;
+}
+
+.logged-out {
+    visibility: hidden;
+}

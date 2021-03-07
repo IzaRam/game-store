@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+
+    <form action="" id="loginForm">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username">
+        <br>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password">
+        <br>
+        <input type="submit" value="LOGIN">
+    </form>
+
+    <div id="result" ></div>
+
+    <div><a href="register.html">Create your account</a></div>
+
+    <script type="text/javascript">
+
+        document.getElementById("loginForm").addEventListener("submit", function(e){
+
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            var body = JSON.stringify({
+                username: username,
+                email: "default",
+                password: password
+            });
+
+            var url = "http://localhost:8080/users/verify";
+
+            var response = Post(url, body);
+
+            if(response == "false") {
+                document.getElementById("result").textContent = "Invalid Username or Password";
+            } else {
+                localStorage.setItem("isLogged", true);
+                localStorage.setItem("username", username);
+                window.location = "index.html";
+            }
+
+            e.preventDefault();
+
+        });
+
+        
+        function Post(url, body){
+            var httpreq = new XMLHttpRequest(); 
+            httpreq.open("POST",url,false);
+            httpreq.setRequestHeader("Content-Type", "application/json;charset=utf-8")
+            httpreq.send(body);
+            return httpreq.responseText;          
+        }
+
+    </script>
+    
+</body>
+</html>

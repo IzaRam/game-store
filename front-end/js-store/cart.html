@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart</title>
+</head>
+<body>
+    
+    <div id="my-games"></div>
+
+
+    <script type="text/javascript">
+
+        var isLogged = localStorage.getItem("isLogged");
+        var username = localStorage.getItem("username");
+
+        if (isLogged == "true") {
+            var url = "http://localhost:8080/users/name/"+username;
+            var user = JSON.parse(Get(url));
+
+            var content = "";
+            for(let obj of user.gameListCart) {
+                content += `<img src="${obj.image_url}" alt="${obj.id}" /> <br>`
+            }
+
+            document.getElementById("my-games").innerHTML = content;
+
+            document.getElementById("my-games").addEventListener('click', (e) => {
+                e = e || window.event;
+                var target = e.target || e.srcElement;
+
+                var game_id = target.alt;
+
+                var userDelete = JSON.parse(JSON.stringify(user));
+                userDelete.gameListCart = [];
+
+                for (let obj of user.gameListCart) {
+                    if (obj.id == game_id) {
+                        userDelete.gameListCart.push(obj);
+                    }
+                }
+
+
+                url = "http://localhost:8080/users/edit/del/"+user.user_id;
+                var body = JSON.stringify(userDelete);
+                var response = Put(url, body);
+
+                window.location.reload();
+
+
+            });
+
+
+        }
+
+        
+        function Get(url){
+            var httpreq = new XMLHttpRequest(); 
+            httpreq.open("GET",url,false);
+            httpreq.send(null);
+            return httpreq.responseText;          
+        }
+
+        function Put(url, body){
+            var httpreq = new XMLHttpRequest(); 
+            httpreq.open("PUT",url,false);
+            httpreq.setRequestHeader("Content-Type", "application/json;charset=utf-8")
+            httpreq.send(body);
+            return httpreq.responseText;          
+        }
+
+    </script>
+
+</body>
+</html>
