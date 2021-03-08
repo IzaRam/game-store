@@ -1,0 +1,70 @@
+main {
+    width: 90%;
+}
+
+.cart {
+    box-sizing: content-box;
+    margin-top: 20pt;
+    color: white;
+    background-color: rgb(63, 61, 61);
+    padding: 20pt;
+}
+
+.cart h2 {
+    margin-bottom: 10pt;
+}
+
+.cart hr {
+    border-color: gray;
+    margin-bottom: 10pt;
+}
+
+.game-cart {
+    margin: 10pt 0;
+    display: flex;
+}
+
+.game-cart .game-cart-info {
+    margin-left: 15pt;
+    margin-top: 15pt;
+    width: 70%;
+}
+
+.game-cart .game-cart-info .cart-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.game-cart .game-cart-info .cart-year {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.game-cart .game-cart-info .cart-desc {
+    margin-top: 15pt;
+    width: 90%;
+}
+
+.game-cart .game-cart-info #btn-delete-cart {
+    margin-top: 40pt;    
+    margin-left: 80%;
+    border: none;
+    border-radius: 5%;
+    background-color: rgb(180, 43, 43);
+    color: white;
+    font-weight: bold;
+    padding: 5pt 10pt;
+}
+
+.game-cart .game-cart-info #btn-delete-cart:hover {
+    cursor: pointer;
+    background-color: red;
+}
+
+.game-cart .cart-price {
+    margin-top: 20pt;
+    margin-right: 30pt;
+    margin-left: 20pt;
+
+    font-weight: bold;
+    font-size: 18px;
+}

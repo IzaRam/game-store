@@ -5,10 +5,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Cart</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cart-style.css">
 </head>
 <body>
+
+    <header>
+        <a href="index.html"><h1>Game Store</h1></a>
+        <div class="menu">
+            <a id="login" href="login.html">LOGIN</a>
+            <a id="cart" class="logged-in" href="cart.html">CART</a>
+            <button id="logout" class="logged-in">Logout</button>
+        </div>
+    </header>
+
+    <main>
+
+        <div class="cart">
+
+            <h2>Shopping Cart</h2>
+
+            <hr>
+
+            <div id="my-games"></div>
+
+            <div class="total">Subtotal (3 items): $28.76</div>
+
+            <button>Proceed to Checkout</button>
+
+        </div>
+        
+
+    </main>
     
-    <div id="my-games"></div>
 
 
     <script type="text/javascript">
@@ -22,7 +51,19 @@
 
             var content = "";
             for(let obj of user.gameListCart) {
-                content += `<img src="${obj.image_url}" alt="${obj.id}" /> <br>`
+                content += `<div class="game-cart">
+                <img src="${obj.image_url}" alt="${obj.id}" /> <br>
+                <div class="game-cart-info">
+                    <p class="cart-name">${obj.name}</p>
+                    <p class="cart-year">${obj.year}</p>
+                    <p class="cart-desc">${obj.description}</p>
+                    <button id="btn-delete-cart">Remove</button>
+                </div>
+                <div class="cart-price">
+                    <p>R$ ${obj.price}</p>
+                </div>
+                </div>
+                <hr>`
             }
 
             document.getElementById("my-games").innerHTML = content;

@@ -5,22 +5,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="login-style.css">
 </head>
 <body>
 
-    <form action="" id="loginForm">
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username">
-        <br>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
-        <br>
-        <input type="submit" value="LOGIN">
-    </form>
+    <header>
+        <a href="index.html"><h1>Game Store</h1></a>
+    </header>
 
-    <div id="result" ></div>
+    <main>
 
-    <div><a href="register.html">Create your account</a></div>
+        <div class="login">
+            <h1>Sign-In</h1>
+            <form action="" id="loginForm">
+                <label for="username">Username</label>
+                <br>
+                <input type="text" name="username" id="username">
+                <br>
+                <label for="password">Password</label>
+                <br>
+                <input type="password" name="password" id="password">
+                <br>
+                <input type="submit" value="LOGIN">
+            </form>
+        
+            <div id="result" ></div>
+        </div>
+
+        <div class="register">
+            <a href="register.html">Create Your Account</a>
+        </div>
+
+    </main>
+
+    
 
     <script type="text/javascript">
 
