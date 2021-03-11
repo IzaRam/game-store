@@ -21,7 +21,7 @@ insert into game(name, year, description, image_url) values('The Last of Us', 20
 
 
 LOAD DATA INFILE '~/Documentos/Projetos/game-store/web-scraping/python-imdb/games.csv'
-INTO TABLE game_store
+INTO TABLE games
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '/n'
