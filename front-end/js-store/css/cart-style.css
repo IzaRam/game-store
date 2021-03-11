@@ -1,10 +1,12 @@
 main {
     width: 90%;
+    min-height: 360pt;
 }
 
 .cart {
     box-sizing: content-box;
     margin-top: 20pt;
+    margin-bottom: 20pt;
     color: white;
     background-color: rgb(63, 61, 61);
     padding: 20pt;
@@ -44,7 +46,7 @@ main {
     width: 90%;
 }
 
-.game-cart .game-cart-info #btn-delete-cart {
+.game-cart .game-cart-info .btn-delete-item {
     margin-top: 40pt;    
     margin-left: 80%;
     border: none;
@@ -55,7 +57,7 @@ main {
     padding: 5pt 10pt;
 }
 
-.game-cart .game-cart-info #btn-delete-cart:hover {
+.game-cart .game-cart-info .btn-delete-item:hover {
     cursor: pointer;
     background-color: red;
 }
@@ -67,4 +69,30 @@ main {
 
     font-weight: bold;
     font-size: 18px;
+}
+
+.total {
+    float: right;
+    margin-right: 10pt;
+    font-size: 14pt;
+}
+
+.total #total {
+    font-weight: bold;
+}
+
+#btn-check {
+    float: right;
+    padding: 5pt 30pt;
+    background-color: rgb(245, 209, 8);
+
+    border-radius: 5px;
+    border-color: #484a4d #535558 #515255;;
+    border-style: solid;
+    border-width: 1px;
+}
+
+#btn-check:hover {
+    cursor: pointer;
+    background-color: rgba(245, 209, 8, 0.8);
 }

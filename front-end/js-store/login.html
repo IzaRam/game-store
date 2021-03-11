@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="login-style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login-style.css">
 </head>
 <body>
 
@@ -27,7 +27,7 @@
                 <br>
                 <input type="password" name="password" id="password">
                 <br>
-                <input type="submit" value="LOGIN">
+                <input type="submit" value="Sign-In">
             </form>
         
             <div id="result" ></div>
@@ -39,47 +39,7 @@
 
     </main>
 
-    
-
-    <script type="text/javascript">
-
-        document.getElementById("loginForm").addEventListener("submit", function(e){
-
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
-
-            var body = JSON.stringify({
-                username: username,
-                email: "default",
-                password: password
-            });
-
-            var url = "http://localhost:8080/users/verify";
-
-            var response = Post(url, body);
-
-            if(response == "false") {
-                document.getElementById("result").textContent = "Invalid Username or Password";
-            } else {
-                localStorage.setItem("isLogged", true);
-                localStorage.setItem("username", username);
-                window.location = "index.html";
-            }
-
-            e.preventDefault();
-
-        });
-
-        
-        function Post(url, body){
-            var httpreq = new XMLHttpRequest(); 
-            httpreq.open("POST",url,false);
-            httpreq.setRequestHeader("Content-Type", "application/json;charset=utf-8")
-            httpreq.send(body);
-            return httpreq.responseText;          
-        }
-
-    </script>
+    <script type="text/javascript" src="js/login.js"></script>
     
 </body>
 </html>

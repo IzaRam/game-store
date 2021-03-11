@@ -1,0 +1,25 @@
+main {
+    min-height: 280pt;
+}
+
+.check {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+
+    width: 50%;
+    margin: auto;
+    margin-top: 100pt;
+    padding: 50pt 0; 
+    border-radius: 5px;
+    color: white;
+    background-color: rgb(83, 80, 80);
+}
+
+.check a {
+    color: white;
+    margin-top: 40pt;
+    text-decoration: underline;
+}

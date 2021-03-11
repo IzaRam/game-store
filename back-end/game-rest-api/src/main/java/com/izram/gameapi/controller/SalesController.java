@@ -43,4 +43,10 @@ public class SalesController {
         return new ResponseEntity<>(jsonObject.toMap(), HttpStatus.OK);
     }
 
+    @DeleteMapping("/del/{id}")
+    public @ResponseBody String deleteSaleById(@PathVariable(value = "id") int id) {
+        saleRepository.deleteById(id);
+        return "Deleted";
+    }
+
 }

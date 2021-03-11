@@ -5,66 +5,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/register-style.css">
 </head>
 <body>
+
+    <header>
+        <a href="index.html"><h1>Game Store</h1></a>
+        <div class="menu">
+            <a id="login" href="login.html">LOGIN</a>
+        </div>
+    </header>
+
+    <main>
+
+        <div class="register">
+
+            <h1>Create account</h1>
+
+            <form id="registerForm" action="">
     
-    <form id="registerForm" action="">
+                <label for="username">Username</label> <br>
+                <input type="text" name="username" id="username">
+                <br>
+                <label for="email">Email</label> <br>
+                <input type="text" name="email" id="email">
+                <br>
+                <label for="password">Password</label> <br>
+                <input type="password" name="password" id="password">
+                <br>
+                <input type="submit" value="Create Your Account">
+        
+            </form>
+        
+            <div id="result"></div>
+    
+        </div>
 
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username">
-        <br>
-        <label for="email">Email</label>
-        <input type="text" name="email" id="email">
-        <br>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
-        <br>
-        <input type="submit" value="Save">
+    </main>
 
-    </form>
-
-    <div id="result"></div>
-
-
-    <script type="text/javascript">
-
-        document.getElementById("registerForm").addEventListener('submit', (e) => {
-
-            var username = document.getElementById("username").value;
-            
-            var body = JSON.stringify({
-                username: username,
-                email: document.getElementById("email").value,
-                password: document.getElementById("password").value
-            })
-
-            var url = "http://localhost:8080/users/add";
-
-            var result = Post(url, body);
-
-            if (result == 200) {
-                localStorage.setItem("isLogged", true);
-                localStorage.setItem("username", username);
-                window.location = "index.html";
-            } else if (result == 400) {
-                document.getElementById("result").textContent = "Username or email already exists!";
-            } else {
-                document.getElementById("result").textContent = "An error occurred during your registration!";
-            }
-
-            e.preventDefault();
-
-        });
-
-        function Post(url, body){
-            var httpreq = new XMLHttpRequest(); 
-            httpreq.open("POST",url,false);
-            httpreq.setRequestHeader("Content-Type", "application/json;charset=utf-8")
-            httpreq.send(body);
-            return httpreq.status;          
-        }
-
-    </script>
+    <script type="text/javascript" src="js/register.js"></script>
 
 </body>
 </html>
