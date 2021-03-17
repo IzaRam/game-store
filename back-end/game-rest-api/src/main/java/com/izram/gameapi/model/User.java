@@ -27,7 +27,7 @@ public class User {
     @Column(nullable = false, unique = true)
     String email;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     List<Game> gameListCart = new ArrayList<>();
 
 }
