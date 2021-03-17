@@ -1,56 +1,51 @@
 package com.izram.gameapi.controller;
 
+import com.izram.gameapi.exception.GameAlreadyExistsException;
+import com.izram.gameapi.exception.GameNotFoundException;
 import com.izram.gameapi.model.Game;
-import com.izram.gameapi.repository.GameRepository;
-import org.json.JSONObject;
+import com.izram.gameapi.service.GameService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
-@Controller
-@RequestMapping("/api")
+@RestController  //includes @Controller and @ResponseBody
+@RequestMapping("/api/v1/games")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class GameController {
 
-    @Autowired
-    GameRepository gameRepository;
+    private final GameService gameService;
 
-    @GetMapping("/games")
-    public @ResponseBody Iterable<Game> getAllGames() {
-        return gameRepository.findAll();
+    @GetMapping("/all")
+    public Iterable<Game> getAllGames() {
+        return gameService.findAll();
     }
 
-    @GetMapping("/games/{id}")
-    public @ResponseBody Game getGameById(@PathVariable(value = "id") int id) {
-        Optional<Game> gameOptional = gameRepository.findById(id);
-        return gameOptional.orElse(null);
+    @GetMapping("/{id}")
+    public Game getGameById(@PathVariable(value = "id") int id)
+            throws GameNotFoundException {
+        return gameService.findById(id);
     }
 
     @PostMapping(path = "/add")
-    public @ResponseBody ResponseEntity<Object> addNewGame(@RequestBody Game game) {
-        gameRepository.save(game);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("Response", "Saved");
-        return new ResponseEntity<>(jsonObject.toMap(), HttpStatus.OK);
+    public ResponseEntity<Game> addNewGame(@RequestBody Game game)
+            throws GameAlreadyExistsException {
+        Game savedGame = gameService.addNewGame(game);
+        return new ResponseEntity<>(savedGame, HttpStatus.CREATED);
     }
 
     @PutMapping(path = "edit/{id}")
-    public @ResponseBody ResponseEntity<Object> editGamebyId(@PathVariable(value = "id") int id, @RequestBody Game updatedGame) throws NoSuchElementException {
-        gameRepository.save(updatedGame);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("Response", "Updated " + id);
-        return new ResponseEntity<>(jsonObject.toMap(), HttpStatus.OK);
+    public Game editGameById(@PathVariable(value = "id") int id, @RequestBody Game updatedGame)
+            throws GameNotFoundException {
+        return gameService.editGameById(id, updatedGame);
     }
 
-    @DeleteMapping("/{id}")
-    public @ResponseBody String delGameById(@PathVariable(value = "id") int id) {
-        gameRepository.deleteById(id);
-        return "Deleted";
+    @DeleteMapping("/del/{id}")
+    public Game delGameById(@PathVariable(value = "id") int id)
+            throws GameNotFoundException {
+        return gameService.delGameById(id);
     }
 
 }

@@ -1,113 +1,67 @@
 package com.izram.gameapi.controller;
 
+import com.izram.gameapi.exception.UserAlreadyExistsException;
+import com.izram.gameapi.exception.UserNotFoundException;
 import com.izram.gameapi.model.User;
-import com.izram.gameapi.repository.UserRepository;
-import org.json.JSONObject;
+import com.izram.gameapi.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
-@Controller
-@RequestMapping("/users")
+@RestController
+@RequestMapping("/api/v1/users")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserService userService;
 
     @GetMapping("/all")
-    public @ResponseBody Iterable<User> findAllUsers() {
-        return userRepository.findAll();
+    public Iterable<User> findAllUsers() {
+        return userService.findAll();
     }
 
     @GetMapping("/{id}")
-    public @ResponseBody User findUserById(@PathVariable(value = "id") int id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        return userOptional.orElse(null);
+    public User findUserById(@PathVariable(value = "id") int id)
+            throws UserNotFoundException {
+        return userService.findById(id);
     }
 
     @GetMapping("/name/{usr}")
-    public @ResponseBody User findUserByUsername(@PathVariable(value = "usr") String username) {
-        return userRepository.findByUsername(username);
+    public User findUserByUsername(@PathVariable(value = "usr") String username)
+            throws UserNotFoundException {
+        return userService.findByUsername(username);
     }
 
     @PostMapping(path = "/add")
-    public @ResponseBody ResponseEntity<Object> addNewUser(@RequestBody User user) {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            userRepository.save(user);
-        } catch (DataIntegrityViolationException e) {
-            jsonObject.put("Error", "User or Email Already Exists");
-            return new ResponseEntity<>(jsonObject.toMap(), HttpStatus.BAD_REQUEST);
-        }
-        jsonObject.put("Response", "User Saved");
-        return new ResponseEntity<>(jsonObject.toMap(), HttpStatus.OK);
+    public ResponseEntity<User> addNewUser(@RequestBody User user)
+            throws UserAlreadyExistsException {
+        User savedUser = userService.addNewUser(user);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/edit/{id}")
-    public @ResponseBody ResponseEntity<Object> editUserById(@PathVariable(value = "id") int id, @RequestBody User updatedUser) {
-        User user = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User " + id + " Not Found"));
-
-        user.setUsername(updatedUser.getUsername());
-        user.setEmail(updatedUser.getEmail());
-        user.setPassword(updatedUser.getPassword());
-
-        updatedUser.getGameListCart().forEach(game -> {
-            if (!user.getGameListCart().contains(game)) {
-                user.getGameListCart().add(game);
-            }
-        });
-
-        userRepository.save(user);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("Response", "Updated " + id);
-        return new ResponseEntity<>(jsonObject.toMap(), HttpStatus.OK);
+    public User editUserById(@PathVariable(value = "id") int id, @RequestBody User updatedUser)
+            throws UserNotFoundException {
+        return userService.editUserById(id, updatedUser);
     }
 
     @PutMapping(path = "/edit/del/{id}")
-    public @ResponseBody ResponseEntity<Object> deleteGameCart(@PathVariable(value = "id") int id, @RequestBody User updatedUser) {
-        User user = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User " + id + " Not Found"));
-
-        user.setUsername(updatedUser.getUsername());
-        user.setEmail(updatedUser.getEmail());
-        user.setPassword(updatedUser.getPassword());
-
-        updatedUser.getGameListCart().forEach(game -> {
-            if (user.getGameListCart().contains(game)) {
-                user.getGameListCart().remove(game);
-            }
-        });
-
-        userRepository.save(user);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("Response", "Updated " + id);
-        return new ResponseEntity<>(jsonObject.toMap(), HttpStatus.OK);
+    public User deleteUserGameCartById(@PathVariable(value = "id") int id, @RequestBody User updatedUser)
+            throws UserNotFoundException {
+        return userService.deleteUserGameCart(id, updatedUser);
     }
 
     @DeleteMapping("/del/{id}")
-    public @ResponseBody String deleteUserById(@PathVariable(value = "id") int id) {
-        userRepository.deleteById(id);
-        return "Deleted";
+    public User deleteUserById(@PathVariable(value = "id") int id) throws UserNotFoundException {
+        return userService.deleteUserById(id);
     }
 
     @PostMapping("/verify")
-    public @ResponseBody Boolean verifyUser(@RequestBody User user) {
-        Iterable<User> userList = userRepository.findAll();
-        for (User u : userList) {
-            if (u.getUsername().equals(user.getUsername())
-                    && u.getPassword().equals(user.getPassword())) {
-                return true;
-            }
-        }
-        return false;
+    public Boolean verifyUser(@RequestBody User user) {
+        return userService.verifyUser(user);
     }
 
 }

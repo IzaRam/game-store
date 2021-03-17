@@ -3,8 +3,10 @@ package com.izram.gameapi.repository;
 import com.izram.gameapi.model.User;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Optional;
+
 public interface UserRepository extends CrudRepository<User, Integer> {
 
-    public User findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
 }

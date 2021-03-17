@@ -12,16 +12,17 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Sale {
+@Table(name = "orders")
+public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    int sale_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int order_id;
 
     @Column(nullable = false)
     int user_id;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @Column(nullable = false)
     List<Game> gameList = new ArrayList<>();
 
