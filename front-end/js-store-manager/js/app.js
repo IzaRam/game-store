@@ -4,7 +4,7 @@ window.onload = function() {
 
 function listAll() {
 
-    var json_obj = JSON.parse(Get("http://localhost:8080/api/games"));
+    var json_obj = JSON.parse(Get("http://localhost:8080/api/v1/games/all"));
 
     var gameCard = document.getElementById("game");
 

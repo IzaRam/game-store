@@ -5,7 +5,7 @@
 function info() {
 
     var id = localStorage.getItem("id");
-    var json_obj = JSON.parse(Get("http://localhost:8080/api/games/"+id));
+    var json_obj = JSON.parse(Get("http://localhost:8080/api/v1/games/"+id));
 
 
     var gameCard = document.getElementById("game-info");
@@ -24,7 +24,7 @@ function info() {
 
     var del = document.getElementById("btn_del");
     del.addEventListener('click', () => {
-        Delete("http://localhost:8080/api/"+id);
+        Delete("http://localhost:8080/api/v1/games/del/"+id);
         window.location = "./index.html";
     })
 

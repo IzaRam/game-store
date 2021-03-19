@@ -8,15 +8,15 @@ document.getElementById("registerForm").addEventListener('submit', (e) => {
         password: document.getElementById("password").value
     })
 
-    var url = "http://localhost:8080/users/add";
+    var url = "http://localhost:8080/api/v1/users/add";
 
     var result = Post(url, body);
 
-    if (result == 200) {
+    if (result == 201) {
         localStorage.setItem("isLogged", true);
         localStorage.setItem("username", username);
         window.location = "index.html";
-    } else if (result == 400) {
+    } else if (result == 409) {
         document.getElementById("result").textContent = "Username or email already exists!";
     } else {
         document.getElementById("result").textContent = "An error occurred during your registration!";

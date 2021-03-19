@@ -2,7 +2,7 @@ var isLogged = localStorage.getItem("isLogged");
 var username = localStorage.getItem("username");
 
 if (isLogged == "true") {
-    var url = "http://localhost:8080/users/name/"+username;
+    var url = "http://localhost:8080/api/v1/users/name/"+username;
     var user = JSON.parse(Get(url));
 
     var id = [];
@@ -51,7 +51,7 @@ if (isLogged == "true") {
             }
 
 
-            url = "http://localhost:8080/users/edit/del/"+user.user_id;
+            url = "http://localhost:8080/api/v1/users/edit/del/"+user.user_id;
             var body = JSON.stringify(userDelete);
             var response = Put(url, body);
 

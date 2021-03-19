@@ -2,7 +2,7 @@ console.log(localStorage.getItem("id"));
 
         // Send form data
 
-        urlP = "http://localhost:8080/api/add"
+        urlP = "http://localhost:8080/api/v1/games/add"
 
         
 

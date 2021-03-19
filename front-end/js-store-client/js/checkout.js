@@ -2,7 +2,7 @@ document.getElementById("btn-check").addEventListener('click', () => {
 
     if (isLogged == "true") {
 
-        var url = "http://localhost:8080/users/name/"+username;
+        var url = "http://localhost:8080/api/v1/users/name/"+username;
         var user = JSON.parse(Get(url));
 
 
@@ -12,12 +12,12 @@ document.getElementById("btn-check").addEventListener('click', () => {
             gameList: user.gameListCart
         }
         var body = JSON.stringify(sale);
-        var url = "http://localhost:8080/sales/add";
+        var url = "http://localhost:8080/api/v1/orders/add";
         Post(url, body);
 
 
         // Clear User Cart
-        url = "http://localhost:8080/users/edit/del/" + user.user_id;
+        url = "http://localhost:8080/api/v1/users/edit/del/" + user.user_id;
         body = JSON.stringify(user);
         Put(url, body);
 

@@ -2,7 +2,7 @@ console.log(localStorage.getItem("id"));
 
 // Complete form
 var id = localStorage.getItem("id");
-var json_obj = JSON.parse(Get("http://localhost:8080/api/games/"+id));
+var json_obj = JSON.parse(Get("http://localhost:8080/api/v1/games/"+id));
 
 document.getElementById("name").value = json_obj.name;
 document.getElementById("year").value = json_obj.year;
@@ -20,7 +20,7 @@ function Get(url){
 
 // Send form data
 
-urlP = "http://localhost:8080/api/edit/"+id;
+urlP = "http://localhost:8080/api/v1/games/edit/"+id;
 
 document.getElementById("myForm").addEventListener("submit", function(e){
 

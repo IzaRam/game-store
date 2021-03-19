@@ -9,7 +9,7 @@ document.getElementById("loginForm").addEventListener("submit", function(e){
         password: password
     });
 
-    var url = "http://localhost:8080/users/verify";
+    var url = "http://localhost:8080/api/v1/users/verify";
 
     var response = Post(url, body);
 

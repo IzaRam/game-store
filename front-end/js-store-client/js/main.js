@@ -47,7 +47,7 @@ logout.addEventListener("click", () => {
 // LIST ALL GAMES
 function listAllGames() {
 
-    var url = "http://localhost:8080/api/games";
+    var url = "http://localhost:8080/api/v1/games/all";
 
     var response = JSON.parse(Get(url));
 
@@ -99,15 +99,15 @@ document.getElementById("btn-buy").addEventListener('click', () => {
 
 // Function Add Game to Cart
 function addGameCart(game_id) {
-    var game = JSON.parse(Get("http://localhost:8080/api/games/"+game_id));
+    var game = JSON.parse(Get("http://localhost:8080/api/v1/games/"+game_id));
 
     if(isLogged == "true") {
 
-        var user = JSON.parse(Get("http://localhost:8080/users/name/"+username));
+        var user = JSON.parse(Get("http://localhost:8080/api/v1/users/name/"+username));
 
         user.gameListCart.push(game);
 
-        url = "http://localhost:8080/users/edit/"+user.user_id;
+        url = "http://localhost:8080/api/v1/users/edit/"+user.user_id;
         body = JSON.stringify(user);
         var response = Put(url, body);
         console.log(response);
