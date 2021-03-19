@@ -48,9 +48,9 @@ public class UserServiceImpl implements UserService{
     public User editUserById(int id, User updatedUser) throws UserNotFoundException {
 
         User user = userRepository.findById(id).orElseThrow(() ->
-                new UserNotFoundException(updatedUser.getUsername()));
+                new UserNotFoundException(String.valueOf(id)));
 
-        user.setUsername(updatedUser.getUsername());
+        user.setUsername(updatedUser.getUsername());    //TODO verify if new username/email already exists
         user.setEmail(updatedUser.getEmail());
         user.setPassword(updatedUser.getPassword());
 
