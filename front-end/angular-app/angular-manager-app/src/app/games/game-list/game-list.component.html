@@ -1,0 +1,25 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-xs-5">
+      <a
+        href="#"
+        class="list-group-item clearfix"
+        style="margin-bottom: 10px;"
+        *ngFor="let game of games">
+
+        <div class="pull-left">
+          <h4 class="list-group-item-heading">{{ game.name }}</h4>
+          <p class="list-group-item-text">{{ game.year }}</p>
+        </div>
+
+        <span class="pull-right">
+          <img [src]="game.imageUrl" alt="{{ game.name }}" class="img-responsive" style="max-height: 50px;">
+        </span>
+
+      </a>
+
+    </div>
+  </div>
+
+</div>
