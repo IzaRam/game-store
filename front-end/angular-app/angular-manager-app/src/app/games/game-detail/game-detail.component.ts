@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Game } from '../game.model';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-game-detail',
@@ -7,11 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameDetailComponent implements OnInit {
 
-  url = "https://knoow.net/wp-content/uploads/2019/04/tetris-jogos-eletr%C3%B3nicos-mais-vendidos-de-sempre-lista-ranking-top-10-jogos-mais-vendidos.jpg";
+  @Input() game: Game;
 
-  constructor() { }
+  constructor(private gameService: GameService) { }
 
   ngOnInit(): void {
+
+  }
+
+  onDeleteGame(game: Game) {
+    this.gameService.removeGame(game);
+    this.gameService.gameSelected.emit(undefined);
   }
 
 }

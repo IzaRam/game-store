@@ -1,11 +1,18 @@
-<app-header></app-header>
+<app-header (optionSelected)="optMenuSelected($event)"></app-header>
 
 <div class="row">
-  <div class="col-md-5">
-    <app-game-list></app-game-list>
+
+  <div *ngIf="optionSelected === 'list'">
+    <div class="col-md-5">
+      <app-game-list></app-game-list>
+    </div>
+    <div class="col-md-5">
+      <app-game-detail [game]="gameDetail" *ngIf="gameDetail"></app-game-detail>
+    </div>
   </div>
-  <div class="col-md-5">
-    <app-game-detail></app-game-detail>
+
+  <div class="col-xs-10" *ngIf="optionSelected === 'add'">
+    <app-game-add></app-game-add>
   </div>
 </div>
 

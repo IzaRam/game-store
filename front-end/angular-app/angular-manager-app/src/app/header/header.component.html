@@ -2,16 +2,14 @@
   <div class="container-fluid">
 
     <div class="navbar-header">
-      <a href="#" class="navbar-brand">Game Store</a>
+      <a href="#" class="navbar-brand" (click)="onMenuSelect('list')">Game Store</a>
     </div>
 
-    <div class="collapse navbar-collapse">
 
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">New Game</a></li>
-      </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#" (click)="onMenuSelect('add')">New Game</a></li>
+    </ul>
 
-    </div>
 
   </div>
 </nav>

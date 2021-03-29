@@ -6,7 +6,8 @@
         href="#"
         class="list-group-item clearfix"
         style="margin-bottom: 10px;"
-        *ngFor="let game of games">
+        *ngFor="let game of games; let i = index"
+        (click)="onGameClick(i)">
 
         <div class="pull-left">
           <h4 class="list-group-item-heading">{{ game.name }}</h4>

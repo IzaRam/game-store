@@ -1,6 +1,6 @@
 <div class="row" style="margin-bottom: 10px;">
   <div class="col-xs-12">
-    <div class="btn-group">
+    <div class="btn-group" appDropdown>
 
       <button
         type="button"
@@ -10,7 +10,7 @@
 
       <ul class="dropdown-menu">
         <li><a href="#">Edit Game</a></li>
-        <li><a href="#">Delete Game</a></li>
+        <li><a href="#" (click)="onDeleteGame(game)">Delete Game</a></li>
       </ul>
 
     </div>
@@ -19,24 +19,24 @@
 
 <div class="row" style="margin-bottom: 10px;">
   <div class="col-xs-12">
-    <img src="{{ url }}" alt="" class="img-responsive">
+    <img src="{{ game.imageUrl }}" alt="" class="img-responsive">
   </div>
 </div>
 
 <div class="row">
   <div class="col-xs-12">
-    Name
+    <p style="font-weight: bold; font-size: medium;">{{ game.name }}</p>
   </div>
 </div>
 
 <div class="row">
   <div class="col-xs-12">
-    Year
+    <p>{{ game.year }}</p>
   </div>
 </div>
 
 <div class="row">
   <div class="col-xs-12">
-    Description
+    <p>{{ game.description }}</p>
   </div>
 </div>

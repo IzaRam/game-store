@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Game } from '../game.model';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-game-list',
@@ -8,14 +9,16 @@ import { Game } from '../game.model';
 })
 export class GameListComponent implements OnInit {
 
-  games: Game[] = [
-    new Game(1, "Tetris", 2000, "A cool game", "https://knoow.net/wp-content/uploads/2019/04/tetris-jogos-eletr%C3%B3nicos-mais-vendidos-de-sempre-lista-ranking-top-10-jogos-mais-vendidos.jpg"),
-    new Game(1, "Tetris", 2000, "A cool game", "https://knoow.net/wp-content/uploads/2019/04/tetris-jogos-eletr%C3%B3nicos-mais-vendidos-de-sempre-lista-ranking-top-10-jogos-mais-vendidos.jpg")
-  ]
+  games: Game[];
 
-  constructor() { }
+  constructor(private gameService: GameService) { }
 
   ngOnInit(): void {
+    this.games = this.gameService.getGames();
+  }
+
+  onGameClick(position: number) {
+    this.gameService.gameSelected.emit(this.games[position]);
   }
 
 }
