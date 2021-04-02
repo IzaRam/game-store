@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { Game } from '../game.model';
 import { GameService } from '../game.service';
 
@@ -11,14 +13,16 @@ export class GameListComponent implements OnInit {
 
   games: Game[];
 
-  constructor(private gameService: GameService) { }
+  constructor(private gameService: GameService,
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.games = this.gameService.getGames();
   }
 
   onGameClick(position: number) {
-    this.gameService.gameSelected.emit(this.games[position]);
+    this.router.navigate([position], {relativeTo: this.route});
   }
 
 }

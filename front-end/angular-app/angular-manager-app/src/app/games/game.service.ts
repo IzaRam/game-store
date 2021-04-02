@@ -1,11 +1,6 @@
-import { EventEmitter } from "@angular/core";
 import { Game } from "./game.model";
 
 export class GameService {
-
-  gamesChanged = new EventEmitter<void>();
-  gameSelected = new EventEmitter<Game>();
-  gameAdded = new EventEmitter<string>();
 
   private games: Game[] = [
     new Game(1,
@@ -24,15 +19,17 @@ export class GameService {
     return this.games;
   }
 
+  getGame(id: number) {
+    return this.games[id];
+  }
+
   addNewGame(game: Game) {
     this.games.push(game);
-    this.gamesChanged.emit();
   }
 
   removeGame(game: Game) {
     const index = this.games.indexOf(game);
     this.games.splice(index, 1);
-    this.gamesChanged.emit();
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Game } from '../game.model';
 import { GameService } from '../game.service';
 
@@ -14,7 +15,8 @@ export class GameAddComponent implements OnInit {
   @ViewChild('descriptionInput', {static: false}) description: ElementRef;
   @ViewChild('imageInput', {static: false}) imageUrl: ElementRef;
 
-  constructor(private gameService: GameService) { }
+  constructor(private gameService: GameService,
+              private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -23,7 +25,7 @@ export class GameAddComponent implements OnInit {
     const game = new Game(1, this.name.nativeElement.value, this.year.nativeElement.value,
                     this.description.nativeElement.value, this.imageUrl.nativeElement.value);
     this.gameService.addNewGame(game);
-    this.gameService.gameAdded.emit('list');
+    this.router.navigate(['games']);
   }
 
 }

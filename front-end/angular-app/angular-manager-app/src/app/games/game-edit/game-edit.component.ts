@@ -1,17 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Game } from '../game.model';
+
 import { GameService } from '../game.service';
 
 @Component({
-  selector: 'app-game-detail',
-  templateUrl: './game-detail.component.html',
-  styleUrls: ['./game-detail.component.css']
+  selector: 'app-game-edit',
+  templateUrl: './game-edit.component.html',
+  styleUrls: ['./game-edit.component.css']
 })
-export class GameDetailComponent implements OnInit {
+export class GameEditComponent implements OnInit {
 
+  id: number;
   game: Game;
-  @Input() id: number;
 
   constructor(private gameService: GameService,
               private route: ActivatedRoute,
@@ -24,16 +25,11 @@ export class GameDetailComponent implements OnInit {
           this.id = +params['id'];
           this.game = this.gameService.getGame(this.id);
         }
-      );
+      )
   }
 
-  onEditGame() {
-    this.router.navigate(['edit'], {relativeTo: this.route});
-  }
-
-  onDeleteGame(game: Game) {
-    this.gameService.removeGame(game);
-    this.router.navigate(['games']);
+  onSaveGame() {
+    this.router.navigate(['games', this.id]);
   }
 
 }

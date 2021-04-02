@@ -9,8 +9,8 @@
       </button>
 
       <ul class="dropdown-menu">
-        <li><a href="#">Edit Game</a></li>
-        <li><a href="#" (click)="onDeleteGame(game)">Delete Game</a></li>
+        <li><a (click)="onEditGame()" style="cursor: pointer;">Edit Game</a></li>
+        <li><a (click)="onDeleteGame(game)" style="cursor: pointer;">Delete Game</a></li>
       </ul>
 
     </div>
