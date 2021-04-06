@@ -1,3 +1,4 @@
+import { Subject } from "rxjs";
 import { Game } from "./game.model";
 
 export class GameService {
@@ -30,6 +31,10 @@ export class GameService {
   removeGame(game: Game) {
     const index = this.games.indexOf(game);
     this.games.splice(index, 1);
+  }
+
+  updateGame(index: number, newGame: Game) {
+    this.games[index] = newGame;
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Game } from '../game.model';
 
 import { GameService } from '../game.service';
 
@@ -11,25 +11,45 @@ import { GameService } from '../game.service';
 })
 export class GameEditComponent implements OnInit {
 
+  recipeForm: FormGroup
+
   id: number;
-  game: Game;
 
   constructor(private gameService: GameService,
               private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit(): void {
+
     this.route.params
       .subscribe(
         (params: Params) => {
           this.id = +params['id'];
-          this.game = this.gameService.getGame(this.id);
+          this.initForm();
         }
-      )
+      );
   }
 
-  onSaveGame() {
+  initForm() {
+    const game = this.gameService.getGame(this.id);
+
+    this.recipeForm = new FormGroup({
+      'name': new FormControl(game.name, Validators.required),
+      'year': new FormControl(game.year, [Validators.required, Validators.pattern(/^[1-2]+[0-9]{3}$/)]),
+      'description': new FormControl(game.description, Validators.required),
+      'imageUrl': new FormControl(game.imageUrl, Validators.required)
+    });
+
+  }
+
+  onSubmit() {
+    this.gameService.updateGame(this.id, this.recipeForm.value);
     this.router.navigate(['games', this.id]);
   }
+
+  onCancelEditGame() {
+    this.router.navigate(['games', this.id]);
+  }
+
 
 }

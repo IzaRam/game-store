@@ -1,5 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { Game } from '../game.model';
 import { GameService } from '../game.service';
 
@@ -10,22 +12,21 @@ import { GameService } from '../game.service';
 })
 export class GameAddComponent implements OnInit {
 
-  @ViewChild('nameInput', {static: false}) name: ElementRef;
-  @ViewChild('yearInput', {static: false}) year: ElementRef;
-  @ViewChild('descriptionInput', {static: false}) description: ElementRef;
-  @ViewChild('imageInput', {static: false}) imageUrl: ElementRef;
-
   constructor(private gameService: GameService,
               private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  addNewGame() {
-    const game = new Game(1, this.name.nativeElement.value, this.year.nativeElement.value,
-                    this.description.nativeElement.value, this.imageUrl.nativeElement.value);
+  onSubmit(form: NgForm) {
+    const value = form.value;
+    const game = new Game(1, value.name, value.year, value.description, value.image);
     this.gameService.addNewGame(game);
     this.router.navigate(['games']);
+  }
+
+  onClear(form: NgForm) {
+    form.reset();
   }
 
 }

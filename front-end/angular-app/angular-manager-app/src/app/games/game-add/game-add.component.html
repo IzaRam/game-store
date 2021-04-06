@@ -2,7 +2,7 @@
 
   <div class="col-md-8 col-md-offset-4">
 
-    <form class="center-block">
+    <form (ngSubmit)="onSubmit(form)" #form="ngForm" class="center-block">
 
       <div class="row form-group">
         <div class="col-sm-8">
@@ -11,7 +11,9 @@
           type="text"
           id="name"
           class="form-control"
-          #nameInput>
+          name="name"
+          ngModel
+          required>
         </div>
       </div>
 
@@ -22,7 +24,10 @@
           type="number"
           id="year"
           class="form-control"
-          #yearInput>
+          name="year"
+          ngModel
+          required
+          pattern="^[1-2]+[0-9]{3}$">
         </div>
       </div>
 
@@ -34,7 +39,9 @@
           type="text"
           id="desc"
           class="form-control"
-          #descriptionInput></textarea>
+          name="description"
+          ngModel
+          required></textarea>
         </div>
       </div>
 
@@ -45,16 +52,17 @@
           type="text"
           id="image"
           class="form-control"
-          #imageInput>
+          name="image"
+          ngModel
+          required>
         </div>
       </div>
 
       <div class="row">
         <div class="col-xs-12">
           <div class="btn-toolbar">
-            <button class="btn btn-success" type="submit" (click)="addNewGame()">Add</button>
-            <button class="btn btn-danger" type="button">Delete</button>
-            <button class="btn btn-primary" type="button">Clear</button>
+            <button class="btn btn-success" type="submit" [disabled]="!form.valid">Add</button>
+            <button class="btn btn-primary" type="button" (click)="onClear(form)">Clear</button>
           </div>
         </div>
       </div>
