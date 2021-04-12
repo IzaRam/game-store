@@ -44,7 +44,7 @@ public class UserController {
 
     @PutMapping(path = "/edit/{id}")
     public User editUserById(@PathVariable(value = "id") int id, @RequestBody User updatedUser)
-            throws UserNotFoundException {
+            throws UserNotFoundException, UserAlreadyExistsException {
         return userService.editUserById(id, updatedUser);
     }
 

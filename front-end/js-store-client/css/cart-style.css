@@ -26,6 +26,10 @@ main {
     display: flex;
 }
 
+.game-cart img {
+    width: 200px;
+}
+
 .game-cart .game-cart-info {
     margin-left: 15pt;
     margin-top: 15pt;

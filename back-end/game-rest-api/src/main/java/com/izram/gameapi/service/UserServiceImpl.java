@@ -45,12 +45,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User editUserById(int id, User updatedUser) throws UserNotFoundException {
+    public User editUserById(int id, User updatedUser) throws UserNotFoundException, UserAlreadyExistsException {
 
         User user = userRepository.findById(id).orElseThrow(() ->
                 new UserNotFoundException(String.valueOf(id)));
 
-        user.setUsername(updatedUser.getUsername());    //TODO verify if new username/email already exists
+        user.setUsername(updatedUser.getUsername());
         user.setEmail(updatedUser.getEmail());
         user.setPassword(updatedUser.getPassword());
 
@@ -60,7 +60,13 @@ public class UserServiceImpl implements UserService{
             }
         });
 
-        return userRepository.save(user);
+        User savedUser;
+        try {
+            savedUser =  userRepository.save(user);
+        }catch (DataIntegrityViolationException e) {
+            throw new UserAlreadyExistsException(user.getUsername());
+        }
+        return savedUser;
     }
 
     @Override
@@ -83,14 +89,14 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Boolean verifyUser(User user) {
-        Iterable<User> userList = userRepository.findAll();
-        for (User u : userList) {
-            if (u.getUsername().equals(user.getUsername())
-                    && u.getPassword().equals(user.getPassword())) {
-                return true;
-            }
+        try {
+            User findUser = userRepository.findByUsername(user.getUsername()).orElseThrow(
+                    () -> new UserNotFoundException(user.getUsername())
+            );
+            return findUser.getPassword().equals(user.getPassword());
+        }catch (UserNotFoundException e) {
+            return false;
         }
-        return false;
     }
 
 }

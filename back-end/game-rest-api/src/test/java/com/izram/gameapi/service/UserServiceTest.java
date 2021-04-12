@@ -111,7 +111,7 @@ class UserServiceTest {
     }
 
     @Test
-    public void givenUserIdToEditShouldEditTheUserOfThatId() throws UserNotFoundException {
+    public void givenUserIdToEditShouldEditTheUserOfThatId() throws UserNotFoundException, UserAlreadyExistsException {
         when(userRepository.findById(user1.getUser_id())).thenReturn(Optional.ofNullable(user1));
         Game game = new Game(1, "game_test", 2021, "game for test", "www.image_url", 0, 0);
         user2.setGameListCart(new ArrayList<>(Arrays.asList(game)));
@@ -144,7 +144,7 @@ class UserServiceTest {
 
     @Test
     public void givenUserToVerifyThenShouldReturnTrueIfUserExists() {
-        when(userRepository.findAll()).thenReturn(userList);
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(Optional.ofNullable(user1));
         Boolean result = userService.verifyUser(user1);
         assertEquals(true, result);
         User newUser = new User(3, "user_test_that_not_exists", "usertest3@email", "test123", new ArrayList<>());

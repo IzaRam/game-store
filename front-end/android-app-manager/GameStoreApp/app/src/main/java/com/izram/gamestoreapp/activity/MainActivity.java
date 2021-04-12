@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
     private void listAllGames() {
         RequestQueue queue = Volley.newRequestQueue(this);
 //        String url = "http://10.0.2.2:8080/api/games";
-        String url = "http://192.168.0.104:8080/api/games";
+        String url = "http://192.168.0.104:8080/api/v1/games/all";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void deleteGameById(int position) {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String url = "http://192.168.0.104:8080/api/";
+        String url = "http://192.168.0.104:8080/api/v1/games/del/";
         StringRequest stringRequest = new StringRequest(Request.Method.DELETE,
                 url + gameList.get(position).getId(), new Response.Listener<String>() {
 

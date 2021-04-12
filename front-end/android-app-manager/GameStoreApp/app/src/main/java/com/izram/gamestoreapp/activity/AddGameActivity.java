@@ -86,8 +86,11 @@ public class AddGameActivity extends AppCompatActivity {
         description = findViewById(R.id.ti_description);
         imageUrl = findViewById(R.id.ti_imageUrl);
 
+        Game game = (Game) getIntent().getSerializableExtra("GAME");
+
         JSONObject jsonObject = new JSONObject();
         try {
+            jsonObject.put("id", Integer.parseInt(game.getId()));
             jsonObject.put("name", name.getText().toString());
             jsonObject.put("year", Integer.parseInt(year.getText().toString()));
             jsonObject.put("description", description.getText().toString());
@@ -97,10 +100,8 @@ public class AddGameActivity extends AppCompatActivity {
         }
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://192.168.0.104:8080/api/edit/";
+        String url = "http://192.168.0.104:8080/api/v1/games/edit/";
 
-
-        Game game = (Game) getIntent().getSerializableExtra("GAME");
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url+game.getId(), jsonObject, new Response.Listener<JSONObject>() {
             @Override
@@ -138,7 +139,7 @@ public class AddGameActivity extends AppCompatActivity {
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://192.168.0.104:8080/api/add";
+        String url = "http://192.168.0.104:8080/api/v1/games/add";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override

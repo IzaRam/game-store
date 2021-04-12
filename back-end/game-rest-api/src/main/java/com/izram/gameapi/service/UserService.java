@@ -14,7 +14,7 @@ public interface UserService {
 
     User addNewUser(User user) throws UserAlreadyExistsException;
 
-    User editUserById(int id, User updatedUser) throws UserNotFoundException;
+    User editUserById(int id, User updatedUser) throws UserNotFoundException, UserAlreadyExistsException;
 
     User deleteUserGameCart(int id, User updatedUser) throws UserNotFoundException;
 
