@@ -1,40 +1,46 @@
-import { Subject } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+
+import { Observable, Subject } from "rxjs";
+
 import { Game } from "./game.model";
 
+@Injectable({
+  providedIn: 'root'
+})
 export class GameService {
 
-  private games: Game[] = [
-    new Game(1,
-      "The Witcher 3: Wild Hunt - Blood and Wine",
-      2016,
-      "Geralt is in the southern province of Toussaint where a monstrous serial killer is targeting knights with a dark past. Geralt and his old vampire friend investigate the killer's motives.",
-      "https://m.media-amazon.com/images/M/MV5BMTg2ZmY0MGUtZmFjZS00YjkxLTlmMWEtMDE0ZWQwYzBlODA2XkEyXkFqcGdeQXVyMzUwNzgzNzg@._V1_UY268_CR13,0,182,268_AL_.jpg"),
-    new Game(2,
-      "Red Dead Redemption II",
-      2018,
-      "Amidst the decline of the Wild West at the turn of the 19th century, outlaw Arthur Morgan and his gang struggle to cope with the loss of their way of life.",
-      "https://m.media-amazon.com/images/M/MV5BMThiMGJkNDUtYjIxYy00ZTRhLWE5NmUtNzI4NTJlOGI4ZTMwXkEyXkFqcGdeQXVyNTk1ODMyNjA@._V1_UY268_CR17,0,182,268_AL_.jpg")
-  ]
+  constructor(private httpClient: HttpClient) { }
 
-  getGames() {
-    return this.games;
+  getGames(): Observable<Game[]> {
+    return this.httpClient.get<Game[]>("http://localhost:8080/api/v1/games/all");
   }
 
-  getGame(id: number) {
-    return this.games[id];
+  getGame(id: number): Observable<Game> {
+    return this.httpClient.get<Game>("http://localhost:8080/api/v1/games/" + id);
   }
 
   addNewGame(game: Game) {
-    this.games.push(game);
+    this.httpClient.post("http://localhost:8080/api/v1/games/add", game)
+        .subscribe(game => {
+          console.log(game);
+
+        });
   }
 
   removeGame(game: Game) {
-    const index = this.games.indexOf(game);
-    this.games.splice(index, 1);
+    this.httpClient.delete("http://localhost:8080/api/v1/games/del/" + game.id)
+        .subscribe(game => {
+          console.log(game);
+        })
   }
 
   updateGame(index: number, newGame: Game) {
-    this.games[index] = newGame;
+    newGame.id = index;
+    this.httpClient.put("http://localhost:8080/api/v1/games/edit/" + index, newGame)
+          .subscribe(game => {
+            console.log(game);
+          })
   }
 
 }

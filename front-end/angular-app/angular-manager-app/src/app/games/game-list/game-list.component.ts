@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { Game } from '../game.model';
 import { GameService } from '../game.service';
@@ -9,20 +10,33 @@ import { GameService } from '../game.service';
   templateUrl: './game-list.component.html',
   styleUrls: ['./game-list.component.css']
 })
-export class GameListComponent implements OnInit {
+export class GameListComponent implements OnInit, OnDestroy {
 
   games: Game[];
 
+  subscription: Subscription;
+
   constructor(private gameService: GameService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.games = this.gameService.getGames();
+    // this.games = this.gameService.getGames();
+
+    this.subscription = this.gameService.getGames().subscribe(games => {
+      this.games = games;
+    })
+
   }
 
   onGameClick(position: number) {
-    this.router.navigate([position], {relativeTo: this.route});
+    window.scroll(0, 0);
+    const index = this.games[position].id;
+    this.router.navigate([index], {relativeTo: this.route});
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

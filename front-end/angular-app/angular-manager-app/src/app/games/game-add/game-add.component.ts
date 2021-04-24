@@ -20,9 +20,9 @@ export class GameAddComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     const value = form.value;
-    const game = new Game(1, value.name, value.year, value.description, value.image);
+    const game = new Game(0, value.name, value.year, value.description, value.image);
     this.gameService.addNewGame(game);
-    this.router.navigate(['games']);
+    this.router.navigate(['/games']);
   }
 
   onClear(form: NgForm) {

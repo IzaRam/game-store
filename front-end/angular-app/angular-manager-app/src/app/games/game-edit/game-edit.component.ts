@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Game } from '../game.model';
 
 import { GameService } from '../game.service';
 
@@ -11,9 +12,16 @@ import { GameService } from '../game.service';
 })
 export class GameEditComponent implements OnInit {
 
-  recipeForm: FormGroup
+  recipeForm: FormGroup = new FormGroup({
+    'name': new FormControl("", Validators.required),
+    'year': new FormControl("", [Validators.required, Validators.pattern(/^[1-2]+[0-9]{3}$/)]),
+    'description': new FormControl("", Validators.required),
+    'image_url': new FormControl("", Validators.required)
+  });
 
   id: number;
+
+  game: Game;
 
   constructor(private gameService: GameService,
               private route: ActivatedRoute,
@@ -31,14 +39,16 @@ export class GameEditComponent implements OnInit {
   }
 
   initForm() {
-    const game = this.gameService.getGame(this.id);
-
-    this.recipeForm = new FormGroup({
-      'name': new FormControl(game.name, Validators.required),
-      'year': new FormControl(game.year, [Validators.required, Validators.pattern(/^[1-2]+[0-9]{3}$/)]),
-      'description': new FormControl(game.description, Validators.required),
-      'imageUrl': new FormControl(game.imageUrl, Validators.required)
+    this.gameService.getGame(this.id).subscribe(game => {
+      this.recipeForm = new FormGroup({
+        'name': new FormControl(game.name, Validators.required),
+        'year': new FormControl(game.year, [Validators.required, Validators.pattern(/^[1-2]+[0-9]{3}$/)]),
+        'description': new FormControl(game.description, Validators.required),
+        'image_url': new FormControl(game.image_url, Validators.required)
+      });
     });
+
+
 
   }
 

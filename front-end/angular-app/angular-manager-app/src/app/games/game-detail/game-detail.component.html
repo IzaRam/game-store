@@ -19,24 +19,24 @@
 
 <div class="row" style="margin-bottom: 10px;">
   <div class="col-xs-12">
-    <img src="{{ game.imageUrl }}" alt="" class="img-responsive">
+    <img src="{{ game?.image_url }}" alt="" class="img-responsive" style="max-height: 400px;">
   </div>
 </div>
 
 <div class="row">
   <div class="col-xs-12">
-    <p style="font-weight: bold; font-size: medium;">{{ game.name }}</p>
+    <p style="font-weight: bold; font-size: medium;">{{ game?.name }}</p>
   </div>
 </div>
 
 <div class="row">
   <div class="col-xs-12">
-    <p>{{ game.year }}</p>
+    <p>{{ game?.year }}</p>
   </div>
 </div>
 
 <div class="row">
   <div class="col-xs-12">
-    <p>{{ game.description }}</p>
+    <p>{{ game?.description }}</p>
   </div>
 </div>

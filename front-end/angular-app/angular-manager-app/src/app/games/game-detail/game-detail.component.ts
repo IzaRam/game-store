@@ -11,20 +11,26 @@ import { GameService } from '../game.service';
 export class GameDetailComponent implements OnInit {
 
   game: Game;
-  @Input() id: number;
+  id: number;
 
   constructor(private gameService: GameService,
               private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit(): void {
+
+
     this.route.params
       .subscribe(
         (params: Params) => {
           this.id = +params['id'];
-          this.game = this.gameService.getGame(this.id);
+
+          this.gameService.getGame(this.id).subscribe(game => {
+            this.game = game;
+          })
         }
       );
+
   }
 
   onEditGame() {
@@ -33,7 +39,7 @@ export class GameDetailComponent implements OnInit {
 
   onDeleteGame(game: Game) {
     this.gameService.removeGame(game);
-    this.router.navigate(['games']);
+    this.router.navigate(['/games']);
   }
 
 }
