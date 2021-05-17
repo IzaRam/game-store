@@ -10,6 +10,8 @@ import { Game } from "./game.model";
 })
 export class GameService {
 
+  gamesChanged = new Subject<void>();
+
   constructor(private httpClient: HttpClient) { }
 
   getGames(): Observable<Game[]> {
@@ -24,7 +26,7 @@ export class GameService {
     this.httpClient.post("http://localhost:8080/api/v1/games/add", game)
         .subscribe(game => {
           console.log(game);
-
+          this.gamesChanged.next();
         });
   }
 
@@ -32,6 +34,7 @@ export class GameService {
     this.httpClient.delete("http://localhost:8080/api/v1/games/del/" + game.id)
         .subscribe(game => {
           console.log(game);
+          this.gamesChanged.next();
         })
   }
 
@@ -39,8 +42,9 @@ export class GameService {
     newGame.id = index;
     this.httpClient.put("http://localhost:8080/api/v1/games/edit/" + index, newGame)
           .subscribe(game => {
-            console.log(game);
-          })
+              console.log(game);
+              this.gamesChanged.next();
+          });
   }
 
 }

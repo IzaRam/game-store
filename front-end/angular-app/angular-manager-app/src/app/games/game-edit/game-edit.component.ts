@@ -12,7 +12,7 @@ import { GameService } from '../game.service';
 })
 export class GameEditComponent implements OnInit {
 
-  recipeForm: FormGroup = new FormGroup({
+  gameForm: FormGroup = new FormGroup({
     'name': new FormControl("", Validators.required),
     'year': new FormControl("", [Validators.required, Validators.pattern(/^[1-2]+[0-9]{3}$/)]),
     'description': new FormControl("", Validators.required),
@@ -40,7 +40,7 @@ export class GameEditComponent implements OnInit {
 
   initForm() {
     this.gameService.getGame(this.id).subscribe(game => {
-      this.recipeForm = new FormGroup({
+      this.gameForm = new FormGroup({
         'name': new FormControl(game.name, Validators.required),
         'year': new FormControl(game.year, [Validators.required, Validators.pattern(/^[1-2]+[0-9]{3}$/)]),
         'description': new FormControl(game.description, Validators.required),
@@ -48,12 +48,10 @@ export class GameEditComponent implements OnInit {
       });
     });
 
-
-
   }
 
   onSubmit() {
-    this.gameService.updateGame(this.id, this.recipeForm.value);
+    this.gameService.updateGame(this.id, this.gameForm.value);
     this.router.navigate(['games', this.id]);
   }
 

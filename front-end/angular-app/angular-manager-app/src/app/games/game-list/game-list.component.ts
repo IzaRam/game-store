@@ -21,11 +21,17 @@ export class GameListComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    // this.games = this.gameService.getGames();
 
-    this.subscription = this.gameService.getGames().subscribe(games => {
+    this.gameService.getGames().subscribe(games => {
       this.games = games;
-    })
+    });
+
+    this.subscription = this.gameService.gamesChanged.subscribe(() => {
+      this.gameService.getGames().subscribe(games => {
+        this.games = [];
+        this.games = games;
+      });
+    });
 
   }
 
